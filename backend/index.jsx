@@ -1,5 +1,5 @@
 const express = require("express");
-const { ConnectDB } = require("./db/db.jsx");
+
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 const UserRouter = require("./routes/UserRoute.jsx");
@@ -17,14 +17,13 @@ app.use(Auth);
 app.use("/api/v1", UserUpdateRoute);
 app.use("/api/v1/account", TranferRoute);
 
+// Fetching DB url from Applciation Congiguration
 try {
-  mongoose
-    .connect("mongodb+srv://Kunal:Ayush3199@paytm.n6rckn4.mongodb.net/")
-    .then(() =>
-      app.listen(PORT, () => {
-        console.log("app is running");
-      })
-    );
+  mongoose.connect(process.env.MongoDB_URL).then(() =>
+    app.listen(PORT, () => {
+      console.log("app is running");
+    })
+  );
 
   //   ConnectDB();
 } catch (error) {
